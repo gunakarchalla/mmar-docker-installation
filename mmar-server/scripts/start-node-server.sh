@@ -26,9 +26,9 @@ echo "PRODUCTION = $PRODUCTION"
     SERVER_PID=$!
     echo "Server started in production with PID $SERVER_PID"
     else
-    npm run start &
+    npm run docker:debug &
     SERVER_PID=$!
-    echo "Server started in develop with PID $SERVER_PID"
+    echo "Server started in develop(debug) with PID $SERVER_PID"
     fi
 
     # Uncomment if you want to add example metamodels

@@ -76,14 +76,14 @@ set_up_repo() {
         fi
     fi
 }
-set_up_repo "https://github.com/MM-AR/mmar-database.git" "/usr/src/app/shared/mmar/mmar-database"
+set_up_repo "https://github.com/gunakarchalla/mmar-database.git" "/usr/src/app/shared/mmar/mmar-database"
 
-set_up_repo "https://github.com/MM-AR/mmar-global-data-structure.git" "/usr/src/app/shared/mmar/mmar-global-data-structure"
+set_up_repo "https://github.com/gunakarchalla/mmar-global-data-structure.git" "/usr/src/app/shared/mmar/mmar-global-data-structure"
 
-set_up_repo "https://github.com/MM-AR/mmar-server.git" "/usr/src/app/shared/mmar/mmar-server"
+set_up_repo "https://github.com/gunakarchalla/mmar-server.git" "/usr/src/app/shared/mmar/mmar-server"
 
-set_up_repo "https://github.com/MM-AR/mmar-modeling-client.git" "/usr/src/app/shared/mmar/mmar-modeling-client"
+set_up_repo "https://github.com/gunakarchalla/mmar-modeling-client.git" "/usr/src/app/shared/mmar/mmar-modeling-client"
 
-set_up_repo "https://github.com/MM-AR/mmar-metamodeling-client.git" "/usr/src/app/shared/mmar/mmar-metamodeling-client"
+set_up_repo "https://github.com/gunakarchalla/mmar-metamodeling-client.git" "/usr/src/app/shared/mmar/mmar-metamodeling-client"
 
-set_up_repo "https://github.com/MM-AR/mmar-vizrep-client.git" "/usr/src/app/shared/mmar/mmar-vizrep-client"
+set_up_repo "https://github.com/gunakarchalla/mmar-vizrep-client.git" "/usr/src/app/shared/mmar/mmar-vizrep-client"

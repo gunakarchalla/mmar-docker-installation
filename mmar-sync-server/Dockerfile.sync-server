@@ -1,0 +1,18 @@
+# Use Node base image
+FROM node:20 AS sync-server
+
+RUN echo "Building the Docker image..."
+
+COPY scripts/start-sync-server.sh /usr/src/app/start-sync-server.sh
+RUN chmod +x /usr/src/app/start-sync-server.sh
+
+COPY scripts/npm-installation-sync-server.sh /usr/src/app/npm-installation-sync-server.sh
+RUN chmod +x /usr/src/app/npm-installation-sync-server.sh
+
+COPY scripts/start-node-sync-server.sh /usr/src/app/start-node-sync-server.sh
+RUN chmod +x /usr/src/app/start-node-sync-server.sh
+
+COPY conf /usr/src/app/mmar-config-files
+
+RUN echo "Running the start-sync-server.sh script for mmar-sync-server..."
+CMD ["/usr/src/app/start-sync-server.sh"]

@@ -107,6 +107,24 @@ services:
     mem_limit: ${VIZREP_CLIENT_MEMORY_LIMIT:-6G}
     cpus: ${VIZREP_CLIENT_CPU_LIMIT:-2}
 
+  mmar-sync-server:
+    build:
+      context: ./mmar-sync-server
+      dockerfile: Dockerfile.sync-server
+    container_name: mmar_sync_server
+    restart: always
+    volumes:
+      - mmar-sync-server-data:/usr/src/data
+      - mmar-shared-data:/usr/src/app/shared
+    working_dir: /usr/src/data
+    environment:
+      GIT_BRANCH: ${GIT_BRANCH}
+      PRODUCTION: ${PRODUCTION}
+    ports:
+      - "8060:8060"
+    mem_limit: ${SYNC_SERVER_MEMORY_LIMIT:-1G}
+    cpus: ${SYNC_SERVER_CPU_LIMIT:-1}
+
 volumes:
   mmar-initiator:
   mmar-server-data:
@@ -114,3 +132,4 @@ volumes:
   mmar-metamodeling-data:
   mmar-shared-data:
   mmar-vizrep-data:
+  mmar-sync-server-data:

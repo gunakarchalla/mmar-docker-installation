@@ -5,11 +5,12 @@ FROM node:20 AS initiator
 RUN echo "Building the Docker image..."
 
 # Create necessary directories with proper permissions
-RUN mkdir -p /usr/src/app/shared/mmar/mmar-database 
+RUN mkdir -p /usr/src/app/shared/mmar/mmar-database
 RUN mkdir -p /usr/src/app/shared/mmar/mmar-server
 RUN mkdir -p /usr/src/app/shared/mmar/mmar-modeling-client
 RUN mkdir -p /usr/src/app/shared/mmar/mmar-metamodeling-client
 RUN mkdir -p /usr/src/app/shared/mmar/mmar-vizrep-client
+RUN mkdir -p /usr/src/app/shared/mmar/mmar-sync-server
 
 # Update apt and install dependencies
 RUN apt-get update && \

@@ -89,3 +89,5 @@ set_up_repo "https://github.com/gunakarchalla/mmar-metamodeling-client.git" "/us
 set_up_repo "https://github.com/gunakarchalla/mmar-vizrep-client.git" "/usr/src/app/shared/mmar/mmar-vizrep-client"
 
 set_up_repo "https://github.com/gunakarchalla/mmar-sync-server.git" "/usr/src/app/shared/mmar/mmar-sync-server"
+
+set_up_repo "https://github.com/gunakarchalla/mmar-metamodeling-client-react.git" "/usr/src/app/shared/mmar/mmar-metamodeling-client-react"

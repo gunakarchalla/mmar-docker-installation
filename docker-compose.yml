@@ -125,6 +125,25 @@ services:
     mem_limit: ${SYNC_SERVER_MEMORY_LIMIT:-1G}
     cpus: ${SYNC_SERVER_CPU_LIMIT:-1}
 
+  mmar-metamodeling-client-react:
+    build:
+      context: ./mmar-metamodeling-client-react
+      dockerfile: Dockerfile.metamodeling-react
+    container_name: mmar_metamodeling_client_react
+    restart: always
+    volumes:
+      - mmar-metamodeling-react-data:/usr/src/data
+      - mmar-shared-data:/usr/src/app/shared
+    working_dir: /usr/src/data
+    environment:
+      GIT_BRANCH: ${GIT_BRANCH}
+      PRODUCTION: ${PRODUCTION}
+      DELETE_NODE_MODULES: ${DELETE_NODE_MODULES}
+    ports:
+      - "5173:5173"
+    mem_limit: ${METAMODELING_REACT_CLIENT_MEMORY_LIMIT:-2G}
+    cpus: ${METAMODELING_REACT_CLIENT_CPU_LIMIT:-2}
+
 volumes:
   mmar-initiator:
   mmar-server-data:
@@ -133,3 +152,4 @@ volumes:
   mmar-shared-data:
   mmar-vizrep-data:
   mmar-sync-server-data:
+  mmar-metamodeling-react-data:

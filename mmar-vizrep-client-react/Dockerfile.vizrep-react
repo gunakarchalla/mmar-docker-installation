@@ -1,0 +1,19 @@
+FROM node:20 AS vizrep-react
+
+RUN echo "Building the Docker image..."
+
+RUN mkdir -p /usr/src/app/shared/mmar/mmar-vizrep-client-react \
+    /usr/src/app/shared/mmar/mmar-global-data-structure
+
+COPY scripts/start-vizrep-client-react.sh /usr/src/app/start-vizrep-client-react.sh
+RUN chmod +x /usr/src/app/start-vizrep-client-react.sh
+
+COPY scripts/npm-installation-vizrep-client-react.sh /usr/src/app/npm-installation-vizrep-client-react.sh
+RUN chmod +x /usr/src/app/npm-installation-vizrep-client-react.sh
+
+COPY scripts/start-node-vizrep-client-react.sh /usr/src/app/start-node-vizrep-client-react.sh
+RUN chmod +x /usr/src/app/start-node-vizrep-client-react.sh
+
+COPY conf /usr/src/app/mmar-config-files
+
+CMD ["/usr/src/app/start-vizrep-client-react.sh"]

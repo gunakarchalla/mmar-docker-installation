@@ -1,0 +1,19 @@
+FROM node:20 AS modeling-react
+
+RUN echo "Building the Docker image..."
+
+RUN mkdir -p /usr/src/app/shared/mmar/mmar-modeling-client-react \
+    /usr/src/app/shared/mmar/mmar-global-data-structure
+
+COPY scripts/start-modeling-client-react.sh /usr/src/app/start-modeling-client-react.sh
+RUN chmod +x /usr/src/app/start-modeling-client-react.sh
+
+COPY scripts/npm-installation-modeling-client-react.sh /usr/src/app/npm-installation-modeling-client-react.sh
+RUN chmod +x /usr/src/app/npm-installation-modeling-client-react.sh
+
+COPY scripts/start-node-modeling-client-react.sh /usr/src/app/start-node-modeling-client-react.sh
+RUN chmod +x /usr/src/app/start-node-modeling-client-react.sh
+
+COPY conf /usr/src/app/mmar-config-files
+
+CMD ["/usr/src/app/start-modeling-client-react.sh"]

@@ -163,6 +163,25 @@ services:
     mem_limit: ${VIZREP_REACT_CLIENT_MEMORY_LIMIT:-6G}
     cpus: ${VIZREP_REACT_CLIENT_CPU_LIMIT:-2}
 
+  mmar-modeling-client-react:
+    build:
+      context: ./mmar-modeling-client-react
+      dockerfile: Dockerfile.modeling-react
+    container_name: mmar_modeling_client_react
+    restart: always
+    volumes:
+      - mmar-modeling-react-data:/usr/src/data
+      - mmar-shared-data:/usr/src/app/shared
+    working_dir: /usr/src/data
+    environment:
+      GIT_BRANCH: ${GIT_BRANCH}
+      PRODUCTION: ${PRODUCTION}
+      DELETE_NODE_MODULES: ${DELETE_NODE_MODULES}
+    ports:
+      - "8085:8085"
+    mem_limit: ${MODELING_REACT_CLIENT_MEMORY_LIMIT:-6G}
+    cpus: ${MODELING_REACT_CLIENT_CPU_LIMIT:-2}
+
 volumes:
   mmar-initiator:
   mmar-server-data:
@@ -173,3 +192,4 @@ volumes:
   mmar-sync-server-data:
   mmar-metamodeling-react-data:
   mmar-vizrep-react-data:
+  mmar-modeling-react-data:

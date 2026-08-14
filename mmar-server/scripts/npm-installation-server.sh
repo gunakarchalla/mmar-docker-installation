@@ -36,9 +36,3 @@ echo "----------------------------------------"
 echo "Copying .env files for the node servers..."
 echo "----------------------------------------"
 cp /usr/src/app/mmar-config-files/.env-mmar-api /usr/src/app/shared/mmar/mmar-server/.env
-
-# copy the \conf\DBConfig.jsonn file to the mmar-server directory
-echo "----------------------------------------"
-echo "overwrite DBConfig.json file to the mmar-server directory..."
-echo "----------------------------------------"
-cp /usr/src/app/mmar-config-files/DBConfig.json /usr/src/app/shared/mmar/mmar-server/config/DBConfig.json

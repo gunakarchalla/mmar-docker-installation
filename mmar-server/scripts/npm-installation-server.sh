@@ -31,8 +31,15 @@ done
 npm_installation "/usr/src/app/shared/mmar/mmar-server"
 
 
-#copy the env files for the node servers
+#copy the env file matching the mode this container was started in.
+#the server reads a single .env, so the right one has to be selected here.
 echo "----------------------------------------"
-echo "Copying .env files for the node servers..."
+echo "Copying .env file for the node server..."
 echo "----------------------------------------"
-cp /usr/src/app/mmar-config-files/.env-mmar-api /usr/src/app/shared/mmar/mmar-server/.env
+if [ "$PRODUCTION" = true ]; then
+    echo "Using the production configuration (.env-mmar-api-prod)."
+    cp /usr/src/app/mmar-config-files/.env-mmar-api-prod /usr/src/app/shared/mmar/mmar-server/.env
+else
+    echo "Using the development configuration (.env-mmar-api-development)."
+    cp /usr/src/app/mmar-config-files/.env-mmar-api-development /usr/src/app/shared/mmar/mmar-server/.env
+fi

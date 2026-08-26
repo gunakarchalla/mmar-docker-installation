@@ -124,10 +124,38 @@ The MMAR platform is configured using environment variables defined in the `.env
 
 ### API Server Configuration
 
-- `API_SERVER_PORT`: The port on which the API server will run (default: `8000`)
-- `HTTPPORT`: The port for the Node.js API server (used in `.env-mmar-api`, default: `8000`)
-- `JWT_SECRET`: Secret key for JWT authentication (used in `.env-mmar-api`)
-- `TOKEN_EXPIRE_TIME`: Expiration time for JWT tokens in ms (used in `.env-mmar-api`, default: `86400000`)
+The API server reads a single `.env` file. `npm-installation-server.sh` picks
+which one to copy from the `PRODUCTION` variable of the root env file:
+`.env-mmar-api-prod` when `PRODUCTION=true`, `.env-mmar-api-development`
+otherwise. Both live in `mmar-server/conf`.
+
+The server validates this configuration while it starts and refuses to boot on a
+bad one, rather than failing later on a request.
+
+- `API_SERVER_PORT`: The port on which the API server will run, published by `docker-compose.yml` (default: `8000`)
+- `HTTPPORT`: The port the Node.js API server listens on. Must match `API_SERVER_PORT` (default: `8000`)
+- `JWT_SECRET`: **Mandatory.** Secret key used to sign and verify the JSON web tokens. At least 32 characters, or the server will not start. Generate one with `openssl rand -base64 48`. `mmar-sync-server` verifies those tokens locally, so its `JWT_SECRET` must be byte-identical
+- `PGPASSWORD`: **Mandatory.** Password of the database role the server connects as. Must match `POSTGRES_PASSWORD` in the root env file
+- `PGHOST`, `PGPORT`, `PGUSER`, `PGDATABASE`: Database connection details (defaults: `database`, `5432`, `api`, `api`)
+- `PGPOOL_MAX`: Connections held open by the server. Must stay well below the database's own `max_connections` across all instances (default: `25`)
+- `PGPOOL_IDLE_TIMEOUT_MS`, `PGPOOL_CONNECT_TIMEOUT_MS`: Pool timeouts in ms (defaults: `30000`, `10000`)
+- `PG_STATEMENT_TIMEOUT_MS`, `PG_QUERY_TIMEOUT_MS`: Upper bound on a single query in ms, so a runaway statement cannot pin a connection (defaults: `30000`)
+- `NODE_ENV`: `development` enables verbose logging. Anything else, including unset, is treated as a production deployment
+- `CORS_ORIGINS`: Comma-separated browser origins allowed to call the API. The API accepts cookie authentication, so this cannot be left open to every origin: left empty, any origin may call the API but credentials are refused. Both files ship with every client port published by `docker-compose.yml`
+- `PUBLIC_BASE_URL`: Base url used to build the links returned for uploaded files. Falls back to the host of the incoming request when unset. Set it when the server sits behind a reverse proxy
+- `TOKEN_EXPIRE_TIME`: Lifetime of an issued token, in the notation accepted by jsonwebtoken (`30m`, `8h`, `7d`) or a plain number of seconds. There is no revocation list, so this is also how long a leaked token stays usable (default: `8h`)
+- `SECURITY_AUDIT_PERSIST_TOKEN_SUCCESS`: Record successful token verifications in `logging.t_security_event`. That is one insert per authenticated API call, so it is off by default. Sign ins, rejections and privilege changes are always recorded (default: `false`)
+
+### Sync Server Configuration
+
+The sync server follows the same pattern: `npm-installation-sync-server.sh`
+copies `.env-mmar-sync-server-prod` when `PRODUCTION=true` and
+`.env-mmar-sync-server-development` otherwise, both from
+`mmar-sync-server/conf`.
+
+- `PORT`: The port the websocket server listens on. Must match the port published for `mmar-sync-server` in `docker-compose.yml` (default: `8060`)
+- `JWT_SECRET`: The sync server verifies the tokens issued by `mmar-server` locally instead of calling back for every message, so this **must be byte-identical** to `JWT_SECRET` in the matching `mmar-server` env file. A mismatch shows up as clients being disconnected with code `4401` (`bad-jwt`)
+- `API_URL`: The API the sync server asks for a caller's access level on a scene instance. This is the docker-compose service name, not `localhost`, because the request travels over the compose network (default: `http://mmar-server:8000`)
 
 ### Client Configuration (Vizrep, Modeling and Metamodeling Client)
 
@@ -168,9 +196,10 @@ You can adjust these values in .env (for production) or .env-dev (for developmen
 ### Notes
 
 - The `.env` file is used for production, `.env-dev` for development.
-- Each client and server service has its own `.env-mmar-*` file in its `conf` folder for additional configuration.
+- Each client and server service has its own `.env-mmar-*` files in its `conf` folder for additional configuration, one `-development` and one `-prod` per service. Which of the two is used follows the `PRODUCTION` variable of the root env file, so you never have to switch them by hand.
 - For local development, set `API_URL` and `ALLOWED_HOSTS` to `localhost` in the relevant `.env-mmar-*` files.
 - For production, set `API_URL` and `ALLOWED_HOSTS` to your domain and use `https` for `API_URL`.
+- The `JWT_SECRET` shipped in the `-prod` files of `mmar-server` and `mmar-sync-server` is committed to this public repository and has to be considered known to everyone. Replace it in **both** files with your own `openssl rand -base64 48` before exposing a deployment to anyone else.
 
 **Always restart your containers after changing environment variables.**
 

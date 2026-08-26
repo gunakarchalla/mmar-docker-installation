@@ -8,7 +8,7 @@ echo "PRODUCTION = $PRODUCTION"
         echo "Starting $PRODUCTION server. This may take some time..."
         echo "The branch checked out is $GIT_BRANCH."
         echo "mmar-sync-server will be exposed on http://localhost:8060"
-        echo "!!!!!! If you change the port in conf/.env-mmar-sync-server, you have to change the port in docker-compose.yml as well !!!!!"
+        echo "!!!!!! If you change the port in the conf/.env-mmar-sync-server-* files, you have to change the port in docker-compose.yml as well !!!!!"
         echo "........................................................................................................................................."
 
         sleep 10

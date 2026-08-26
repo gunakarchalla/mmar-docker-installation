@@ -18,6 +18,17 @@ npm_installation() {
     fi
 }
 
+# mmar-global-data-structure (gds) is a TypeScript project reference of this
+# package, so gds must have its own node_modules on disk before anything
+# here is compiled. The initiator installs gds and only then creates this
+# marker. Without the wait, the TypeScript build can fail with
+# "Cannot find module 'class-transformer'".
+GDS_READY_MARKER="/usr/src/app/shared/mmar/.gds-install-complete"
+while [ ! -f "$GDS_READY_MARKER" ]; do
+    echo "Waiting for mmar-global-data-structure to be installed by the initiator..."
+    sleep 5
+done
+
 while [ ! -f /usr/src/app/shared/mmar/mmar-sync-server/package.json ]; do
     echo "Waiting for package.json to be created in /usr/src/app/shared/mmar/mmar-sync-server..."
     sleep 5

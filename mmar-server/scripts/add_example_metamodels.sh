@@ -58,8 +58,10 @@ postMetamodel() {
         -H "Authorization: Bearer $access_token" \
         -d @"$file" $base_url"metamodel/sceneTypes")
 
-    # Check if the HTTP status code is 200 (Success)
-    if [ "$response" -ne 200 ]; then
+    # Accept any 2xx status. The API answers a successful POST to
+    # /metamodel/sceneTypes with 201 Created, so checking for 200 alone logged
+    # "Failed to add" for metamodels that had in fact been created.
+    if [ "$response" -lt 200 ] || [ "$response" -ge 300 ]; then
         echo "Failed to add example metamodel: $file (HTTP code: $response)"
         echo "----------------------------------------"
         return 1

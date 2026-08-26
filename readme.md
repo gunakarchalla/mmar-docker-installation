@@ -199,6 +199,7 @@ You can adjust these values in .env (for production) or .env-dev (for developmen
 - For local development, set `API_URL` and `ALLOWED_HOSTS` to `localhost` in the relevant `.env-mmar-*` files.
 - For production, set `API_URL` and `ALLOWED_HOSTS` to your domain and use `https` for `API_URL`.
 - The `JWT_SECRET` shipped in the `-prod` files of `mmar-server` and `mmar-sync-server` is committed to this public repository and has to be considered known to everyone. Replace it in **both** files with your own `openssl rand -base64 48` before exposing a deployment to anyone else.
+- The `initiator` container clones every repository and installs `mmar-global-data-structure` (gds), which the server, the sync server and both clients build against. When it is done it creates the marker file `/usr/src/app/shared/mmar/.gds-install-complete` in the shared volume; the other containers wait for that marker before they install and build. Because of this, the `initiator` has to run: starting a single service (e.g. `docker compose up mmar-server`) will wait forever unless `initiator` is started as well.
 
 **Always restart your containers after changing environment variables.**
 

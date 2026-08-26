@@ -30,7 +30,7 @@ You can install and start the MMAR environment using a single command depending 
 ### Quick Start Production Mode
 
 Before starting the production mode, make sure that you adapt the `.env` file to your needs. You can find the file in the `root` directory.
-If you want to run the production mode on a local machine and expose it to localhost, check the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-prod` and `.env-mmar-modeling-client-prod`). The `API_URL` should be set to `http` and not `https`. (By default no changes needed).
+If you want to run the production mode on a local machine and expose it to localhost, check the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-react-prod` and `.env-mmar-modeling-client-react-prod`). The `API_URL` should be set to `http` and not `https`. (By default no changes needed).
 
 If you want to run the production mode on a production server, set the environment variable `API_URL` and `ALLOWED_HOSTS` to the domain name of your server and use `https` for the `API_URL`. 
 
@@ -59,7 +59,7 @@ If you want to develop something for the MMAR platform, you can use the developm
 
 The development mode uses the `.env-dev` file for configuration. You can find the file in the `root` directory. You can change the environment variables in this file to suit your needs.
 
-If you want to run the development mode on a local machine and expose it to localhost (default scenario), set the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-dev` and `.env-mmar-modeling-client-dev`). The `API_URL` should be set to `http` and not `https` (by default no changes needed).
+If you want to run the development mode on a local machine and expose it to localhost (default scenario), set the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-react-development` and `.env-mmar-modeling-client-react-development`). The `API_URL` should be set to `http` and not `https` (by default no changes needed).
 
 To start the development mode, run:
 ```bash
@@ -68,7 +68,7 @@ docker compose --env-file .env-dev up
 
 This will set up and start the necessary containers for MMAR. The first time you run this command, it may take a while to download the required images and set up the containers. Subsequent runs will be faster as Docker caches the images. 
 
-Check the console output for any errors. If everything is set up correctly, you can access the API Server at [http://localhost:8000/login](http://localhost:8000/login), the Modeling Client at [http://localhost:8080](http://localhost:8080), and the Metamodeling Client at [http://localhost:8070](http://localhost:8070). 
+Check the console output for any errors. If everything is set up correctly, you can access the API Server at [http://localhost:8000/login](http://localhost:8000/login), the Metamodeling Client at [http://localhost:8075](http://localhost:8075), and the Modeling Client at [http://localhost:8085](http://localhost:8085). 
 
 By using the VS Code Remote Development extension (See section `Attach Container to VSCode`), you can access the code base in an IDE to make changes. 
 
@@ -157,12 +157,12 @@ copies `.env-mmar-sync-server-prod` when `PRODUCTION=true` and
 - `JWT_SECRET`: The sync server verifies the tokens issued by `mmar-server` locally instead of calling back for every message, so this **must be byte-identical** to `JWT_SECRET` in the matching `mmar-server` env file. A mismatch shows up as clients being disconnected with code `4401` (`bad-jwt`)
 - `API_URL`: The API the sync server asks for a caller's access level on a scene instance. This is the docker-compose service name, not `localhost`, because the request travels over the compose network (default: `http://mmar-server:8000`)
 
-### Client Configuration (Vizrep, Modeling and Metamodeling Client)
+### Client Configuration (Modeling and Metamodeling Client)
 
 - `API_URL`: URL of the API endpoint (e.g., `http://localhost:8000` for local, or your domain for production)
 - `HTTPS`: Set to `true` to enable HTTPS, `false` otherwise
 - `ANALYZE`: Set to `true` to enable bundle analysis, `false` otherwise
-- `PORT`: The port on which the client will run (e.g., `8080` for modeling, `8070` for metamodeling)
+- `PORT`: The port on which the client will run (e.g., `8085` for modeling, `8075` for metamodeling)
 - `COMPRESS`: Set to `true` to enable compression, `false` otherwise
 - `ALLOWED_HOSTS`: Comma-separated list of allowed hosts (e.g., `localhost` or your domain)
 - `ERRORS`, `WARNINGS`, `RUNTIME_ERRORS`: Set to `true` to enable overlays for errors, warnings, and runtime errors respectively
@@ -178,12 +178,12 @@ Set these in your `.env` or `.env-dev` to control Docker resource allocation for
 - `DB_SERVER_CPU_LIMIT`: CPU limit for the database container (e.g., `2`)
 - `API_SERVER_MEMORY_LIMIT`: Memory limit for the API server container (e.g., `2G`)
 - `API_SERVER_CPU_LIMIT`: CPU limit for the API server container (e.g., `2`)
-- `MODELING_CLIENT_MEMORY_LIMIT`: Memory limit for the modeling client container (e.g., `2G`)
-- `MODELING_CLIENT_CPU_LIMIT`: CPU limit for the modeling client container (e.g., `2`)
-- `METAMODELING_CLIENT_MEMORY_LIMIT`: Memory limit for the metamodeling client container (e.g., `2G`)
-- `METAMODELING_CLIENT_CPU_LIMIT`: CPU limit for the metamodeling client container (e.g., `2`)`
-- `VIZREP_CLIENT_MEMORY_LIMIT`: Memory limit for the Vizrep container (e.g., `4G`)
-- `VIZREP_CLIENT_CPU_LIMIT`: CPU limit for the Vizrep container (e.g., `2`)
+- `SYNC_SERVER_MEMORY_LIMIT`: Memory limit for the sync server container (e.g., `1G`)
+- `SYNC_SERVER_CPU_LIMIT`: CPU limit for the sync server container (e.g., `1`)
+- `METAMODELING_REACT_CLIENT_MEMORY_LIMIT`: Memory limit for the metamodeling client container (e.g., `6G`)
+- `METAMODELING_REACT_CLIENT_CPU_LIMIT`: CPU limit for the metamodeling client container (e.g., `2`)
+- `MODELING_REACT_CLIENT_MEMORY_LIMIT`: Memory limit for the modeling client container (e.g., `6G`)
+- `MODELING_REACT_CLIENT_CPU_LIMIT`: CPU limit for the modeling client container (e.g., `2`)
 
 How it works:
 
@@ -191,7 +191,6 @@ These variables are used in the mem_limit and cpus fields of each service in `do
 If a variable is not set, a default value is used (e.g., 2G for memory, 2 for CPU).
 You can adjust these values in .env (for production) or .env-dev (for development) to fit your system’s resources. 
 
-> **<span style="color:gold">Attention:</span> The Monaco editor in the Vizrep client needs a lot of resources during the build process. If your machine has ample resources, you can remove all memory and CPU limits in the `docker-compose.yml` file to speed up the build process for all containers.**
 
 ### Notes
 

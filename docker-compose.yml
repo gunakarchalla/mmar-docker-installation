@@ -53,60 +53,6 @@ services:
     mem_limit: ${API_SERVER_MEMORY_LIMIT:-2G}
     cpus: ${API_SERVER_CPU_LIMIT:-2}
 
-  mmar-modeling-client:
-    build:
-      context: ./mmar-modeling-client
-      dockerfile: Dockerfile.modeling
-    container_name: mmar_modeling_client
-    restart: always
-    volumes:
-      - mmar-modeling-data:/usr/src/data
-      - mmar-shared-data:/usr/src/app/shared
-    working_dir: /usr/src/data
-    environment:
-      GIT_BRANCH: ${GIT_BRANCH}
-      PRODUCTION: ${PRODUCTION}
-    ports:
-      - "8080:8080"
-    mem_limit: ${MODELING_CLIENT_MEMORY_LIMIT:-2G}
-    cpus: ${MODELING_CLIENT_CPU_LIMIT:-2}
-
-  mmar-metamodeling-client:
-    build:
-      context: ./mmar-metamodeling-client
-      dockerfile: Dockerfile.metamodeling
-    container_name: mmar_metamodeling_client
-    restart: always
-    volumes:
-      - mmar-metamodeling-data:/usr/src/data
-      - mmar-shared-data:/usr/src/app/shared
-    working_dir: /usr/src/data
-    environment:
-      GIT_BRANCH: ${GIT_BRANCH}
-      PRODUCTION: ${PRODUCTION}
-    ports:
-      - "8070:8070"
-    mem_limit: ${METAMODELING_CLIENT_MEMORY_LIMIT:-2G}
-    cpus: ${METAMODELING_CLIENT_CPU_LIMIT:-2}
-
-  mmar-vizrep-client:
-    build:
-      context: ./mmar-vizrep-client
-      dockerfile: Dockerfile.vizrep
-    container_name: mmar_vizrep_client
-    restart: always
-    volumes:
-      - mmar-vizrep-data:/usr/src/data
-      - mmar-shared-data:/usr/src/app/shared
-    working_dir: /usr/src/data
-    environment:
-      GIT_BRANCH: ${GIT_BRANCH}
-      PRODUCTION: ${PRODUCTION}
-    ports:
-      - "8090:8090"
-    mem_limit: ${VIZREP_CLIENT_MEMORY_LIMIT:-6G}
-    cpus: ${VIZREP_CLIENT_CPU_LIMIT:-2}
-
   mmar-sync-server:
     build:
       context: ./mmar-sync-server
@@ -144,25 +90,6 @@ services:
     mem_limit: ${METAMODELING_REACT_CLIENT_MEMORY_LIMIT:-2G}
     cpus: ${METAMODELING_REACT_CLIENT_CPU_LIMIT:-2}
 
-  mmar-vizrep-client-react:
-    build:
-      context: ./mmar-vizrep-client-react
-      dockerfile: Dockerfile.vizrep-react
-    container_name: mmar_vizrep_client_react
-    restart: always
-    volumes:
-      - mmar-vizrep-react-data:/usr/src/data
-      - mmar-shared-data:/usr/src/app/shared
-    working_dir: /usr/src/data
-    environment:
-      GIT_BRANCH: ${GIT_BRANCH}
-      PRODUCTION: ${PRODUCTION}
-      DELETE_NODE_MODULES: ${DELETE_NODE_MODULES}
-    ports:
-      - "8095:8095"
-    mem_limit: ${VIZREP_REACT_CLIENT_MEMORY_LIMIT:-6G}
-    cpus: ${VIZREP_REACT_CLIENT_CPU_LIMIT:-2}
-
   mmar-modeling-client-react:
     build:
       context: ./mmar-modeling-client-react
@@ -185,11 +112,7 @@ services:
 volumes:
   mmar-initiator:
   mmar-server-data:
-  mmar-modeling-data:
-  mmar-metamodeling-data:
   mmar-shared-data:
-  mmar-vizrep-data:
   mmar-sync-server-data:
   mmar-metamodeling-react-data:
-  mmar-vizrep-react-data:
   mmar-modeling-react-data:

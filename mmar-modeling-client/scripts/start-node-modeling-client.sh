@@ -1,9 +1,9 @@
 #!/bin/bash
 PRODUCTION=${PRODUCTION}
 echo "PRODUCTION = $PRODUCTION"
-echo "Starting mmar-metamodeling-client-react..."
+echo "Starting mmar-modeling-client..."
 
-cd /usr/src/app/shared/mmar/mmar-metamodeling-client-react
+cd /usr/src/app/shared/mmar/mmar-modeling-client
 
 if [ "$PRODUCTION" = true ]; then
     npm run start:prod &

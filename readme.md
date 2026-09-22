@@ -30,7 +30,7 @@ You can install and start the MMAR environment using a single command depending 
 ### Quick Start Production Mode
 
 Before starting the production mode, make sure that you adapt the `.env` file to your needs. You can find the file in the `root` directory.
-If you want to run the production mode on a local machine and expose it to localhost, check the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-react-prod` and `.env-mmar-modeling-client-react-prod`). The `API_URL` should be set to `http` and not `https`. (By default no changes needed).
+If you want to run the production mode on a local machine and expose it to localhost, check the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-prod` and `.env-mmar-modeling-client-prod`). The `API_URL` should be set to `http` and not `https`. (By default no changes needed).
 
 If you want to run the production mode on a production server, set the environment variable `API_URL` and `ALLOWED_HOSTS` to the domain name of your server and use `https` for the `API_URL`. 
 
@@ -59,7 +59,7 @@ If you want to develop something for the MMAR platform, you can use the developm
 
 The development mode uses the `.env-dev` file for configuration. You can find the file in the `root` directory. You can change the environment variables in this file to suit your needs.
 
-If you want to run the development mode on a local machine and expose it to localhost (default scenario), set the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-react-development` and `.env-mmar-modeling-client-react-development`). The `API_URL` should be set to `http` and not `https` (by default no changes needed).
+If you want to run the development mode on a local machine and expose it to localhost (default scenario), set the environment variables `API_URL` and `ALLOWED_HOSTS` to `localhost` (in the files `.env-mmar-metamodeling-client-development` and `.env-mmar-modeling-client-development`). The `API_URL` should be set to `http` and not `https` (by default no changes needed).
 
 To start the development mode, run:
 ```bash
@@ -180,10 +180,10 @@ Set these in your `.env` or `.env-dev` to control Docker resource allocation for
 - `API_SERVER_CPU_LIMIT`: CPU limit for the API server container (e.g., `2`)
 - `SYNC_SERVER_MEMORY_LIMIT`: Memory limit for the sync server container (e.g., `1G`)
 - `SYNC_SERVER_CPU_LIMIT`: CPU limit for the sync server container (e.g., `1`)
-- `METAMODELING_REACT_CLIENT_MEMORY_LIMIT`: Memory limit for the metamodeling client container (e.g., `6G`)
-- `METAMODELING_REACT_CLIENT_CPU_LIMIT`: CPU limit for the metamodeling client container (e.g., `2`)
-- `MODELING_REACT_CLIENT_MEMORY_LIMIT`: Memory limit for the modeling client container (e.g., `6G`)
-- `MODELING_REACT_CLIENT_CPU_LIMIT`: CPU limit for the modeling client container (e.g., `2`)
+- `METAMODELING_CLIENT_MEMORY_LIMIT`: Memory limit for the metamodeling client container (e.g., `6G`)
+- `METAMODELING_CLIENT_CPU_LIMIT`: CPU limit for the metamodeling client container (e.g., `2`)
+- `MODELING_CLIENT_MEMORY_LIMIT`: Memory limit for the modeling client container (e.g., `6G`)
+- `MODELING_CLIENT_CPU_LIMIT`: CPU limit for the modeling client container (e.g., `2`)
 
 How it works:
 

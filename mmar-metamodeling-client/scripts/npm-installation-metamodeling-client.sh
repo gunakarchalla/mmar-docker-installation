@@ -25,15 +25,15 @@ while [ ! -f "$GDS_READY_MARKER" ]; do
     sleep 5
 done
 
-while [ ! -f /usr/src/app/shared/mmar/mmar-modeling-client-react/package.json ]; do
-    echo "Waiting for package.json in mmar-modeling-client-react..."
+while [ ! -f /usr/src/app/shared/mmar/mmar-metamodeling-client/package.json ]; do
+    echo "Waiting for package.json in mmar-metamodeling-client..."
     sleep 5
 done
 
-npm_installation "/usr/src/app/shared/mmar/mmar-modeling-client-react"
+npm_installation "/usr/src/app/shared/mmar/mmar-metamodeling-client"
 
 echo "Copying .env files..."
-cp /usr/src/app/mmar-config-files/.env-mmar-modeling-client-react-development \
-   /usr/src/app/shared/mmar/mmar-modeling-client-react/.env.development
-cp /usr/src/app/mmar-config-files/.env-mmar-modeling-client-react-prod \
-   /usr/src/app/shared/mmar/mmar-modeling-client-react/.env
+cp /usr/src/app/mmar-config-files/.env-mmar-metamodeling-client-development \
+   /usr/src/app/shared/mmar/mmar-metamodeling-client/.env.development
+cp /usr/src/app/mmar-config-files/.env-mmar-metamodeling-client-prod \
+   /usr/src/app/shared/mmar/mmar-metamodeling-client/.env

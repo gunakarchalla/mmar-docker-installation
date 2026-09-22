@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 echo "--------------------------------------------------------"
-bash /usr/src/app/npm-installation-metamodeling-client-react.sh
+bash /usr/src/app/npm-installation-metamodeling-client.sh
 echo "--------------------------------------------------------"
-bash /usr/src/app/start-node-metamodeling-client-react.sh
+bash /usr/src/app/start-node-metamodeling-client.sh

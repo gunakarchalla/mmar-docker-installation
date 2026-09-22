@@ -71,14 +71,14 @@ services:
     mem_limit: ${SYNC_SERVER_MEMORY_LIMIT:-1G}
     cpus: ${SYNC_SERVER_CPU_LIMIT:-1}
 
-  mmar-metamodeling-client-react:
+  mmar-metamodeling-client:
     build:
-      context: ./mmar-metamodeling-client-react
-      dockerfile: Dockerfile.metamodeling-react
-    container_name: mmar_metamodeling_client_react
+      context: ./mmar-metamodeling-client
+      dockerfile: Dockerfile.metamodeling-client
+    container_name: mmar_metamodeling_client
     restart: always
     volumes:
-      - mmar-metamodeling-react-data:/usr/src/data
+      - mmar-metamodeling-data:/usr/src/data
       - mmar-shared-data:/usr/src/app/shared
     working_dir: /usr/src/data
     environment:
@@ -87,17 +87,17 @@ services:
       DELETE_NODE_MODULES: ${DELETE_NODE_MODULES}
     ports:
       - "8075:8075"
-    mem_limit: ${METAMODELING_REACT_CLIENT_MEMORY_LIMIT:-2G}
-    cpus: ${METAMODELING_REACT_CLIENT_CPU_LIMIT:-2}
+    mem_limit: ${METAMODELING_CLIENT_MEMORY_LIMIT:-2G}
+    cpus: ${METAMODELING_CLIENT_CPU_LIMIT:-2}
 
-  mmar-modeling-client-react:
+  mmar-modeling-client:
     build:
-      context: ./mmar-modeling-client-react
-      dockerfile: Dockerfile.modeling-react
-    container_name: mmar_modeling_client_react
+      context: ./mmar-modeling-client
+      dockerfile: Dockerfile.modeling-client
+    container_name: mmar_modeling_client
     restart: always
     volumes:
-      - mmar-modeling-react-data:/usr/src/data
+      - mmar-modeling-data:/usr/src/data
       - mmar-shared-data:/usr/src/app/shared
     working_dir: /usr/src/data
     environment:
@@ -106,13 +106,13 @@ services:
       DELETE_NODE_MODULES: ${DELETE_NODE_MODULES}
     ports:
       - "8085:8085"
-    mem_limit: ${MODELING_REACT_CLIENT_MEMORY_LIMIT:-6G}
-    cpus: ${MODELING_REACT_CLIENT_CPU_LIMIT:-2}
+    mem_limit: ${MODELING_CLIENT_MEMORY_LIMIT:-6G}
+    cpus: ${MODELING_CLIENT_CPU_LIMIT:-2}
 
 volumes:
   mmar-initiator:
   mmar-server-data:
   mmar-shared-data:
   mmar-sync-server-data:
-  mmar-metamodeling-react-data:
-  mmar-modeling-react-data:
+  mmar-metamodeling-data:
+  mmar-modeling-data:
